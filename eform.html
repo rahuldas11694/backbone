@@ -1,0 +1,43 @@
+
+<html>
+<head>
+    
+    <title>Event-Form</title>
+    <link rel="stylesheet" type="text/css" href="/Users/rahulsurvase/crud/css/style.css">
+</head>
+<body>
+
+<div id="form-div" class="frm-dv">
+<form id="event-form" action="" method="post">
+    <input type="hidden" name="redirect"  />
+    <ul class="form-ul">
+        <li>
+            <label for="name">Event Name:</label>
+            <input type="text" name="name" id="name" value="" />
+        </li>
+        <li>
+            <label for="email">Email:</label>
+            <input type="text" name="email" id="email"  />
+        </li>
+        <li>
+            <label for="date">Date:</label>
+            <input type="date" name="eventDate" id="date"  />
+        </li>
+
+        <li>
+            <label for="comments" class="descl">Description of Event:</label>
+            <textarea name="desc" id="desc" cols="25" rows="3"></textarea>
+        </li>
+         <li>
+            <label for="location">Place:</label>
+            <input type="select" name="location" id="place"  />
+        </li>
+        <li>
+            <input type="submit" value="submit"  id="sb"/>
+
+        </li>
+    </ul>
+</form>
+</div>
+</body>
+</html>

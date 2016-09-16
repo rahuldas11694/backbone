@@ -1,0 +1,88 @@
+<!doctype>
+<html>
+<head>
+
+</head>
+
+
+
+<body>
+<form id="edit-form">
+first name : <input id="first_name" type="text">
+last name : <input type="text" id="last_name">
+</form>
+
+<br/>
+<div id="display"> 
+you entered {{first_name}} {{last_name}};
+<button id ="reset-button"> Reset the form</button>
+</div>
+
+<script >
+	
+	SimpleSample = {};
+
+	SimpleSample.Person = Backbone.Model.extend({});
+
+	SimpleSample.FormView = Backbone.View.extend(
+       {
+       	el: "#edit-form",
+
+       	initialize: function()
+       	{
+       		Backbone.ModelBinding.call(this);
+       	}});
+
+	SimpleSample.Displayview = Backbone.View.extend(
+	{
+		el : "#display",
+
+		events:
+		{
+			"click #reset-button": reset
+		},
+
+		initialize: function(){
+			Backbone.ModelBinding.call(this);
+		},
+	
+         
+         reset: function()
+         {
+         	this.model.set({first_name:"rahul", last_name:"das"});
+
+         }
+
+       });
+
+     SimpleSample.App = function()
+     {
+     	this.start = function(){
+     		var person = new SimpleSample.person();
+     		var formview = new SimpleSample.FormView({model:person});
+
+     		var displayView = new SimpleSample.Di
+     	}
+     }
+
+     $(function()
+     {
+     	var app = new SimpleSample.App();
+     });
+
+
+
+
+		
+
+
+</script>
+
+
+<script src="/Users/rahulsurvase/crud/js/underscore.js"></script>
+<script src="/Users/rahulsurvase/crud/js/jquery.js"></script>
+<script src="/Users/rahulsurvase/crud/js/handlebars.js"></script>
+<script src="/Users/rahulsurvase/crud/js/backbone.js"></script>
+<script src="/Users/rahulsurvase/crud/js/main.js"></script>
+</body>
+</html>
