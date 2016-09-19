@@ -2,6 +2,12 @@
 <html>
 <head>
 
+<script src="/Users/rahulsurvase/crud/js/underscore.js"></script>
+<script src="/Users/rahulsurvase/crud/js/jquery.js"></script>
+<script src="/Users/rahulsurvase/crud/js/handlebars.js"></script>
+<script src="/Users/rahulsurvase/crud/js/backbone.js"></script>
+<script src="/Users/rahulsurvase/crud/js/main.js"></script>
+
 </head>
 
 
@@ -14,7 +20,7 @@ last name : <input type="text" id="last_name">
 
 <br/>
 <div id="display"> 
-you entered {{first_name}} {{last_name}};
+You Entered <span data-bind="text first_name"></span> <span data-bind="text last_name"></span><br/>
 <button id ="reset-button"> Reset the form</button>
 </div>
 
@@ -39,7 +45,7 @@ you entered {{first_name}} {{last_name}};
 
 		events:
 		{
-			"click #reset-button": reset
+			"click #reset-button": "reset";
 		},
 
 		initialize: function(){
@@ -79,10 +85,5 @@ you entered {{first_name}} {{last_name}};
 </script>
 
 
-<script src="/Users/rahulsurvase/crud/js/underscore.js"></script>
-<script src="/Users/rahulsurvase/crud/js/jquery.js"></script>
-<script src="/Users/rahulsurvase/crud/js/handlebars.js"></script>
-<script src="/Users/rahulsurvase/crud/js/backbone.js"></script>
-<script src="/Users/rahulsurvase/crud/js/main.js"></script>
 </body>
 </html>

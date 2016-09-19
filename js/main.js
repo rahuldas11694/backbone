@@ -1,3 +1,5 @@
+// eform main
+
 (function() {
 
 window.App = {
@@ -34,14 +36,22 @@ window.template = function(id) {
            routes: {
               'route/:id' : 'defaultRoute'
            },
-        });
+        }); 
 
         //'routemenu' is an instance of the view class
         var routemenu = new App.Routers.RouteMenu();
 
         //It starts listening to the routes and manages the history for bookmarkable URL's
         Backbone.history.start();
-    //});
+    //})
+
+
+
+
+
+
+
+
 
 
 /*******************************************************/
