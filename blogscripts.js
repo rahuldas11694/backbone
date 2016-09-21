@@ -1,4 +1,5 @@
-// backbone model
+// backbone model for for file indexBlog.html
+// FROM YOUTUBE
 
 var Blog = Backbone.Model.extend({
     defaults: {

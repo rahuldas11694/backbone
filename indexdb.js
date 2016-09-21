@@ -1,3 +1,5 @@
+// jquery for storing the data of the form into indexeddb 
+
 (function($) {
     console.log("b . js")
     $.fn.serializeFormJSON = function() {
@@ -55,37 +57,39 @@ $('form').submit(function(e) {
     request.onsuccess = function(event) {
         db = request.result;
 
-        console.log("success db: "+ db,"event data",eventData);
-        console.log("event",event.target.result);
-        console.log("db here",db)
+        console.log("success db: " + db, "event data", eventData);
+        console.log("event", event.target.result);
+        console.log("db here", db)
 
-    /************************************************************************/    
-    var trans = db.transaction(["data"], "readwrite")
-        .objectStore("data")
-        .add({name:eventData.name, email:eventData.email, eventDate:eventData.eventDate, description:eventData.description, location:eventData.location});
-         console.log(" transaction executed")
-    request.onsuccess = function(event) {
-        alert("data has been added to your database.");
-    };
+        /************************************************************************/
+        
+       console.log("********TRANSACTION")
 
-    request.onerror = function(event) {
-        alert("Unable to add data\r\ndata aready exists in your database! ");
-    };
+        var trans = db.transaction(["data"], "readwrite")
+            .objectStore("data")
+            .add({ name: eventData.name, email: eventData.email, eventDate: eventData.eventDate, description: eventData.description, location: eventData.location });
+        console.log(" transaction executed ```")
+        
+        request.onsuccess = function(event) {
+            alert("data has been added to your database.");
+        };
+
+        request.onerror = function(event) {
+            alert("Unable to add data\r\ndata aready exists in your database! ");
+        };
 
     };
- /************************************************************************/    
+    /************************************************************************/
+    console.log("*****UPGRADE OBJECT STORE")
     request.onupgradeneeded = function(event) {
         var db = event.target.result;
         var objectStore = db.createObjectStore("data", { keyPath: "id", autoIncrement: true });
         console.log(objectStore)
         console.log(objectStore.IDBObjectStore.keyPath)
-        /*for (var i in employeeeventData) {
-           objectStore.add(employeeeventData[i]);
-        }*/
+            /*for (var i in employeeeventData) {
+               objectStore.add(employeeeventData[i]);
+            }*/
     }
 
-      
+
 });
-
-
-

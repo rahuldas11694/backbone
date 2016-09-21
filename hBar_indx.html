@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>handlebars</title>
+	        <script src="/Users/rahulsurvase/crud/js/handlebars.js"></script>
+</head>
+<body>
+
+
+
+<div id="quoteData"> </div >
+
+<script id="quote-template" type="text/x-handlebars-template">
+	<h3>Favorite {{name}} Quote </h3>
+	<ol>
+		{{#each quotes}},,,
+		<li>{{quote}}
+		{{/each}}
+	</ol>
+	{{{triple}}}<br><br>
+</script>
+<script type="text/javascript">
+
+var quoteInfo = document.getElementById('quote-template').innerHTML;
+var template = Handlebars.compile(quoteInfo);
+
+var quoteData = template({
+name:"hoiiizkjcbz",
+
+quotes:[
+{
+   quote:"bndhad dqdb daabd asdaldkadiuda dada "
+},
+
+{
+   quote:"bndhad dqdb daabd asdaldkadiuda dada "
+},
+{
+   quote:"bndhad dqdb daabd asdaldkadiuda dada "
+},
+{
+   quote:"bndhad dqdb daabd asdaldkadiuda dada "
+}
+
+
+],
+// TRPLE {{{ it ignoresthe tag and apply its style to htm element }}} 
+triple:"<h1>hsdaida cda dd adada dada hCs caa  acada lD C" 
+
+
+
+})	;
+
+document.getElementById("quoteData").innerHTML+=quoteData;
+
+</script>
+
+
+
+
+
+</body>
+
+
+</html>

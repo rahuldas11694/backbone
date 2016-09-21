@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+   <head>
+      <title>Router Example</title>
+
+<script src="/Users/rahulsurvase/crud/js/underscore.js"></script>
+<script src="/Users/rahulsurvase/crud/js/jquery.js"></script>
+<script src="/Users/rahulsurvase/crud/js/handlebars.js"></script>
+<script src="/Users/rahulsurvase/crud/js/backbone.js"></script>
+
+   </head>
+      <script type="text/javascript">
+         //'RouteMenu' is a name of the view class
+         var RouteMenu = Backbone.View.extend({
+            el: '#routemenu',   //'el' defines which element to be used as the view reference
+
+             //defines a click event to be occur on link
+            events: {
+               'click a' : 'onClick'
+            },
+
+            //After clicking on a link, router calls 'navigate' to update URL
+            onClick: function( e ) {
+
+               //Uses the navigate() method save the application as URL
+               router.navigate('/');
+            }
+        });
+        var Router = Backbone.Router.extend({
+
+           //The 'routes' maps URLs with parameters to functions on your router
+           routes: {
+              'route/:id' : 'defaultRoute'
+           },
+        });
+
+        //'routemenu' is an instance of the view class
+        var routemenu = new RouteMenu();
+
+         //It start listening to the routes and manages the history for bookmarkable URL's
+        Backbone.history.start();
+     </script>
+  <body>
+     //It refers to the view class 'RouteMenu' and creates the 3 links which changes the url when you click on the links
+     <section id="routemenu">
+        <ul>
+           <li> <a href="#/route/1">route 1 </a> </li>
+           <li> <a href="#/route/2">route 2 </a> </li>
+           <li> <a href="#/route/3">route 3 </a> </li>
+       </ul>
+    </section>
+  </body>
+</html>

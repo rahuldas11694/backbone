@@ -1,0 +1,94 @@
+
+<!-- saved from url=(0048)file:///Users/rahulsurvase/crud/event/eform.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+    <title>Event-Form</title>
+    <link rel="stylesheet" type="text/css" href="./Event-Form_files/style.css">
+</head>
+
+<body>
+    <div id="form-div" class="frm-dv">
+        <form id="event-form">
+            <!--<input type="hidden" name="redirect"  />-->
+            <ul class="form-ul">
+                <li>
+                    <label for="name">Event Name:</label>
+                    <input type="text" name="eventName" id="name" value="">
+                </li>
+                <li>
+                    <label for="email">Email:</label>
+                    <input type="text" name="email" id="email">
+                </li>
+                <li>
+                    <label for="date">Date:</label>
+                    <input type="date" name="eventDate" id="date">
+                </li>
+                <li>
+                    <label for="comments" class="descl">Description of Event:</label>
+                    <textarea name="description" id="desc" cols="25" rows="3"></textarea>
+                </li>
+                <li>
+                    <label for="location">Place:</label>
+                    <input type="select" name="location" id="place">
+                </li>
+                <li>
+                    <!--<input type="submit" value="submit" id="sb" />-->
+                    <button class="btn btn-primary add-event" id="sb">Submit</button>
+                </li>
+            </ul>
+        </form></div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>EventName</th>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+               <!-- <tr>
+                    <td>
+                        <input class="form-control eventName-input"></input>
+                    </td>
+                    <td>
+                        <input class="form-control eventDate-input"></input>
+                    </td>
+                    <td>
+                        <input class="form-control description-input"></input>
+                    </td>
+                    <td>
+                        <button class="btn btn-primary add-event">Add</button>
+                    </td>
+                </tr>  
+            </thead>-->
+            </thead><tbody class="events-list">
+            </tbody>
+        </table>
+        <script type="text/template" class="events-list-template">
+            <!--<td><span class="eventName">{{eventName}}</span></td>
+            <td><span class="eventDate">{{eventDate}}</span></td>
+            <td><span class="description">{{description}}</span></td>-->
+            
+
+            <td><span class="eventName"><%=eventName%></span></td>
+            <td><span class="eventDate"><%=eventDate%></span></td>
+            <td><span class="description"><%=description%></span></td>
+            <td>
+                <td><button class="btn btn-warning edit-event">EDIT</button>
+            </td>
+            <td>
+                <button class="btn btn-danger edit-event">DELETE</button>
+            </td>
+        </script>
+        <script src="./Event-Form_files/underscore.js"></script>
+        <script src="./Event-Form_files/jquery.js"></script>
+        <script src="./Event-Form_files/handlebars.js"></script>
+        <script src="./Event-Form_files/backbone.js"></script>
+                <script src="./Event-Form_files/main.js"></script>
+        <script src="./Event-Form_files/formView.js"></script>
+        <!-- /*****this is for indexeddb data storage of form*******/
+        <script src="/Users/rahulsurvase/crud/b.js"></script>
+      -->
+    
+
+
+
+</body></html>
