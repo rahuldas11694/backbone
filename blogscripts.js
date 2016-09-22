@@ -25,7 +25,7 @@ url: "mail.com"
 
 var blog2 = new Blog(
 {
-	author:"ram",
+    author:"ram",
 title:"ram's blog",
 url: "rammail.com"
 });
@@ -42,6 +42,9 @@ var BlogView = Backbone.View.extend({
     model: new Blog(),
     tagName: 'tr',
     initialize: function() {
+          //var blt = document.getElementById('blogs-list-template').innerHTML;
+          //var template= Handlebars.compile(blt);
+console.log("template",template);
         this.template = _.template($('.blogs-list-template').html());
     },
 
@@ -60,25 +63,26 @@ var BlogView = Backbone.View.extend({
         var title = this.$('.title').html();
         var url = this.$('.url').html();
 
-        this.$('.author').html('<input type="text" class="form-control author-update" value=" '+ author +'" >');
-        this.$('.title').html('<input type="text" class="form-control title-update" value="'+ title +' ">');
-        this.$('.url').html('<input type="text" class="form-control url-update" value=" ' +url +'">');
+        this.$('.author').html('<input type="text" class="form-control author-update" value=" ' + author + '" >');
+        this.$('.title').html('<input type="text" class="form-control title-update" value="' + title + ' ">');
+        this.$('.url').html('<input type="text" class="form-control url-update" value=" ' + url + '">');
     },
-     update: function()
-     {
-     	this.model.set('author',$('.author-update').val());
-     	// only the author will get updated title nd url wont 
-     	// for this we do settimeout in BlogsView
-        this.model.set('title',$('.title-update').val());
-        this.model.set('url',$('.url-update').val());
+    update: function() {
+        this.model.set('author', $('.author-update').val());
+        // only the author will get updated title nd url wont 
+        // for this we do settimeout in BlogsView
+        this.model.set('title', $('.title-update').val());
+        this.model.set('url', $('.url-update').val());
         //now we wiill chnge the BlogsView
 
-     },
+    },
 
 
 
     render: function() {
-        this.$el.html(this.template(this.model.toJSON()));
+
+
+ this.$el.html(this.template(this.model.toJSON()));
         return this;
     }
 
@@ -95,9 +99,13 @@ var BlogsView = Backbone.View.extend({
     render: function() {
         var self = this;
         this.$el.html('');
-        _.each(this.model.toArray(), function(blog) {
+        
+        
+        
+        // underscore
+        /*_.each(this.model.toArray(), function(blog) {
             self.$el.append((new BlogView({ model: blog })).render().$el);
-        });
+        });*/
         return this;
     }
 });

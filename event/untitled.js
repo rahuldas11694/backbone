@@ -15,8 +15,8 @@ var Event = Backbone.Model.extend({
         //here
         console.log("save fun called and createObjectStore here")
 
-        var trans = db.transaction(["EVENTDATA3"], "readwrite")
-            .objectStore("EVENTDATA3").add(json)
+        var trans = db.transaction(["EVENTDATA2"], "readwrite")
+            .objectStore("EVENTDATA2").add(json)
 
         // you can also use this 
 
@@ -44,10 +44,6 @@ var formView = Backbone.View.extend({
 
     el: '#event-form',
 
-    initialize: function() {
-        console.log("form view")
-    },
-
 
 
     events: {
@@ -61,8 +57,6 @@ var formView = Backbone.View.extend({
     },*/
 
     add: function() {
-
-        router.navigate('events', { trigger: true });
         //console.log("getting clicked")
         //console.log(this.$el.find('#place').val())
         var eventName = this.$el.find('#name').val();
@@ -80,17 +74,7 @@ var formView = Backbone.View.extend({
 
         }
         this.model.save(json); // calling the save fun to stor data in db 
-    },
-
-    render: function(e) {
-
-
-
     }
-
-
-
-
 });
 //var fv= new formView();
 
@@ -98,11 +82,10 @@ var formView = Backbone.View.extend({
 
 var addEventView = Backbone.View.extend({
     //model: new Event(),
-    el: '#addPerson', // eform
+    el: '#addPerson',   // eform
 
     initialize: function() {
-        console.log("addEventview getting initialized")
-
+        //console.log("addEventview getting initialized")
     },
 
     events: {
@@ -114,40 +97,73 @@ var addEventView = Backbone.View.extend({
 
         router.navigate('add', { trigger: true });
 
-        //this.render(event);
-
-        //console.log( "view");
+        this.render(event);
+        console.log( "view",new formView());
 
     },
 
     render: function(e) {
-        var source = $("#form-template").html();
-        //console.log(source)
-        var template = Handlebars.compile(source);
-        //console.log(template)
-
-        this.$el.empty().append(template);
-        //var context = {title: "My New Post", body: "This is my first post!"};
-        new formView();
-        return false; 
 
 
+        this.$el.empty();
+        /* var viewHtml = '<div class="leftpanel">this is left panel</div>'
+        viewHtml += '<div class="rightpanel">this is right panel</div>'
+        viewHtml += '<div class="controlpanel">'
+        viewHtml += '<button class="LeftButton" style="float: left; width: auto ; ">Hide Left Panel</button>'
+        viewHtml += '<a href="/Users/rahulsurvase/crud/event/eform.html"><button class="RightButton" style="float: left; width: auto;">Hide Right Panel</button></a>'
+        viewHtml += '</div>' */
+
+        /************************************************************************/
+        var viewHtml = '<div id="form-div" class="frm-dv">'
+
+
+        viewHtml += '<form id="event-form" >'
+
+        viewHtml += ' <ul class="form-ul">'
+        viewHtml += '<li>'
+        viewHtml += '<label for="name">Event Name:</label>'
+        viewHtml += '<label for="name">Event Name:</label>'
+        viewHtml += '<input type="text" name="eventName" id="name" value="" />'
+        viewHtml += '</li>'
+        viewHtml += '<li>'
+        viewHtml += ' <label for="email">Email:</label>'
+        viewHtml += '<input type="text" name="email" id="email" />'
+        viewHtml += '</li>'
+        viewHtml += ' <li>'
+        viewHtml += ' <label for="date">Date:</label>'
+        viewHtml += '<input type="date" name="eventDate" id="date" />'
+        viewHtml += '</li>'
+        viewHtml += ' <li>'
+        viewHtml += ' <label for="comments" class="descl">Description of Event:</label>'
+        viewHtml += '<textarea name="description" id="desc" cols="25" rows="3"></textarea>'
+        viewHtml += '</li>'
+        viewHtml += ' <li>'
+        viewHtml += '<label for="location">Place:</label>'
+        viewHtml += '<input type="select" name="location" id="place" />'
+        viewHtml += '</li>'
+        viewHtml += '<li>'
+
+        viewHtml += '<a><button class="btn btn-primary add-event" id="sb">Submit</button></a>'
+        viewHtml += ' </li>'
+        viewHtml += '</ul>'
+        viewHtml += '</form></div>'
+
+
+
+        /************************************************************************/
+        this.$el.empty().append(viewHtml);
+        return this;
     }
-
-
-
 });
 
-var aev = new addEventView();
+//var aev = new addEventView();
 
 /************************ROUTER*******************************************/
 
 var Router = Backbone.Router.extend({
     initialize: function() {
         console.log("router initialized addEventview also initialized");
-
-
-
+        var aev = new addEventView();
     },
 
     routes: {
@@ -159,13 +175,8 @@ var Router = Backbone.Router.extend({
     },
     addEvent: function() {
         console.log("addEvent")
-        new addEventView().render(event)
-
-
-    },
+  },
     eventsList: function() {
-
-      new formView().render(event);
 
         console.log("shows evets list")
 
@@ -185,5 +196,5 @@ Backbone.history.start(); // to check what is after #
 
 
 $(document).submit(function(e) { // this statement stops from page refreshing or yu can use return false
-    e.preventDefault();
+  e.preventDefault();
 });

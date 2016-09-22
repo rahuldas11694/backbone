@@ -1,6 +1,6 @@
 // event  //this file is for eform.html
-//console.log("form view")
-/********************************************************************/
+console.log("form view")
+    /********************************************************************/
 var Event = Backbone.Model.extend({
     defaults: {
         eventName: '',
@@ -15,8 +15,8 @@ var Event = Backbone.Model.extend({
         //here
         console.log("save fun called and createObjectStore here")
 
-        var trans = db.transaction(["EVENTDATA3"], "readwrite")
-            .objectStore("EVENTDATA3").add(json)
+        var trans = db.transaction(["EVENTDATA"], "readwrite")
+            .objectStore("EVENTDATA").add(json)
 
         // you can also use this 
 
@@ -43,11 +43,16 @@ var formView = Backbone.View.extend({
     model: new Event(),
 
     el: '#event-form',
-
     initialize: function() {
-        console.log("form view")
+
+        console.log("hiiiiii")
     },
 
+    render: function() {
+        // handle bars code here
+
+
+    },
 
 
     events: {
@@ -61,10 +66,8 @@ var formView = Backbone.View.extend({
     },*/
 
     add: function() {
-
-        router.navigate('events', { trigger: true });
-        //console.log("getting clicked")
-        //console.log(this.$el.find('#place').val())
+        console.log("getting clicked")
+        console.log(this.$el.find('#place').val())
         var eventName = this.$el.find('#name').val();
         var email = this.$el.find('#email').val();
         var location = this.$el.find('#place').val();
@@ -80,59 +83,30 @@ var formView = Backbone.View.extend({
 
         }
         this.model.save(json); // calling the save fun to stor data in db 
-    },
-
-    render: function(e) {
-
-
-
     }
-
-
-
-
 });
-//var fv= new formView();
+var fv = new formView();
 
 /***********************addEventview********************************************/
 
-var addEventView = Backbone.View.extend({
-    //model: new Event(),
-    el: '#addPerson', // eform
+var addEventView = Backbone.View.extend(
+{
+  el :'#addPerson',
 
-    initialize: function() {
-        console.log("addEventview getting initialized")
+  initialize:function()
+  {
+    console.log("addEventview getting initialized")
+  },
 
-    },
-
-    events: {
-        'click #add-event': 'onClick',
-
-    },
-    onClick: function() {
-        // console.log("onClick addEventview getting called")
-
-        router.navigate('add', { trigger: true });
-
-        //this.render(event);
-
-        //console.log( "view");
-
-    },
-
-    render: function(e) {
-        var source = $("#form-template").html();
-        //console.log(source)
-        var template = Handlebars.compile(source);
-        //console.log(template)
-
-        this.$el.empty().append(template);
-        //var context = {title: "My New Post", body: "This is my first post!"};
-        new formView();
-        return false; 
-
-
-    }
+  events:
+  {
+     'click #add-event':'onClick'
+  },
+  onClick:function()
+  {
+     console.log("addEventview getting called")
+     router.navigate('#add');
+  }
 
 
 
@@ -144,10 +118,7 @@ var aev = new addEventView();
 
 var Router = Backbone.Router.extend({
     initialize: function() {
-        console.log("router initialized addEventview also initialized");
-
-
-
+        console.log("router initialized");
     },
 
     routes: {
@@ -158,15 +129,14 @@ var Router = Backbone.Router.extend({
 
     },
     addEvent: function() {
-        console.log("addEvent")
-        new addEventView().render(event)
+        var aev = new addEventView(); 
+        //var fv = new formView(); //instantiated bcz we wnt to show the page that is 
+        //rendering the page using handlebars 
 
-
+        console.log("routes")
     },
     eventsList: function() {
-
-      new formView().render(event);
-
+         
         console.log("shows evets list")
 
     }

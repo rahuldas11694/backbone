@@ -17,7 +17,7 @@ var db;
 //console.log("request open")
 // here we are creating and opening the db connection 
 
-var request = window.indexedDB.open("EVENT1", 1);
+var request = window.indexedDB.open("EVENT3", 1);
 
 request.onerror = function(event) {
     console.log("error: ");
@@ -34,7 +34,7 @@ request.onsuccess = function(event) {
 
 request.onupgradeneeded = function(event) {
     var db = event.target.result; // EVENTDATA is name of the TABLE ie object store
-    var objectStore = db.createObjectStore("EVENTDATA", { keyPath: "id", autoIncrement: true });
+    var objectStore = db.createObjectStore("EVENTDATA3", { keyPath: "id", autoIncrement: true });
 
     console.log("objectStore created", objectStore)
     console.log("objectStore.IDBObjectStore.keyPath", objectStore.IDBObjectStore)

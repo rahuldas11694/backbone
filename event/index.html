@@ -1,39 +1,80 @@
-
 <!-- FORM index -->
-
 <!DOCTYPE html>
 <html>
+
 <head>
-	<meta charset="utf-8">
-	<link rel="stylesheet" type="text/css" href="/Users/rahulsurvase/crud/css/style.css">
-	<title>add event</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="/Users/rahulsurvase/crud/css/style.css">
+    <title>add event</title>
 </head>
+
 <body>
+    <form id="addPerson" action="">
+        <!--<section id="routemenu"> <input type="text" placeholder="Name of the person"></section>-->
+        <input type="button" class="a" id="add-event" value="ADD EVENT" />
+    </form>
+    <script id="form-template" type="text/x-handlebars-template">
+        <div id="form-div" class="frm-dv">
+            <form id="event-form">
+                <ul class="form-ul">
+                    <li>
+                        <label for="name">Event Name:</label>
+                        <input type="text" name="eventName" id="name" value="" />
+                    </li>
+                    <li>
+                        <label for="email">Email:</label>
+                        <input type="text" name="email" id="email" />
+                    </li>
+                    <li>
+                        <label for="date">Date:</label>
+                        <input type="date" name="eventDate" id="date" />
+                    </li>
+                    <li>
+                        <label for="comments" class="descl">Description of Event:</label>
+                        <textarea name="description" id="desc" cols="25" rows="3"></textarea>
+                    </li>
+                    <li>
+                        <label for="location">Place:</label>
+                        <input type="select" name="location" id="place" />
+                    </li>
+                    <li>
+                        <a href="/Users/rahulsurvase/crud/event/index.html">
+                            <button class="btn btn-primary add-event" id="sb">Submit</button>
+                        </a>
+                    </li>
+                </ul>
+            </form>
+        </div>
+    </script>
+    <tr>
+        <td> <span class="eventName" >eventName</span></td>
+        <td><span class="eventDate">eventDate</span></td>
+        <td><span class="description">description</span></td>
+        <td><button class="btn btn-warning edit-event">EDIT</button>
+            </td>
+            <td>
+                <button class="btn btn-danger edit-event">DELETE</button>
+            </td>
+    </tr>
 
-	<form id="addPerson" action="">
-
-     <section id="routemenu">
-<!--<input type="text" placeholder="Name of the person">-->
-
-<a href="/Users/rahulsurvase/crud/event/eform.html"><input type="button" id="add-event" value="ADD EVENT" /></a>
-	</form>
-
-
-
-<!--<script id="personTemplate" type="text/template">
+    <script id="event-list-template" type="text/x-handlebars-template">
+        <tr>
+            <td><span class="eventName">{{eventName}</span></td>
+            <td><span class="eventDate">{{eventDate}}</span></td>
+            <td><span class="description">{{description}}</span></td>
+    </script>
+    <!--<script id="personTemplate" type="text/template">
 	<span><strong><%= name %></strong> (<%= age %>) - <%= occupation %></span> 
 	<button class="edit">Edit</button>
 	<button class="delete">Delete</button>
 </script>
 -->
-
-<script src="/Users/rahulsurvase/crud/js/underscore.js"></script>
-<script src="/Users/rahulsurvase/crud/js/jquery.js"></script>
-<script src="/Users/rahulsurvase/crud/js/handlebars.js"></script>
-<script src="/Users/rahulsurvase/crud/js/backbone.js"></script>
-
-
-
-
+    <script src="/Users/rahulsurvase/crud/js/underscore.js"></script>
+    <script src="/Users/rahulsurvase/crud/js/jquery.js"></script>
+    <script src="/Users/rahulsurvase/crud/js/handlebars.js"></script>
+    <script src="/Users/rahulsurvase/crud/js/backbone.js"></script>
+    <script src="/Users/rahulsurvase/crud/event/js/formView.js"></script>
+    <script src="/Users/rahulsurvase/crud/event/js/main.js"></script>
 </body>
+
 </html>
