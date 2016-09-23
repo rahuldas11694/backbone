@@ -15,8 +15,8 @@ var Event = Backbone.Model.extend({
         //here
         console.log("save fun called and createObjectStore here")
 
-        var trans = db.transaction(["EVENTDATA5"], "readwrite")
-            .objectStore("EVENTDATA5").add(json)
+        var trans = db.transaction(["EVENTDATA6"], "readwrite")
+            .objectStore("EVENTDATA6").add(json)
 
         // you can also use this 
 
@@ -34,7 +34,28 @@ var Event = Backbone.Model.extend({
         request.onerror = function(event) {
             alert("Unable to add data\r\ndata aready exists in your database! ");
         };
-    }
+    },
+
+    /******************#########################***************************/
+    /* fetch: function(e) {
+             var transaction = db.transaction(["EVENTDATA6"], "readonly");
+             var objectStore = transaction.objectStore("EVENTDATA6");
+
+             var cursor = objectStore.openCursor();
+
+             cursor.onsuccess = function(e) {
+                 var res = e.target.result;
+                 console.log(res)
+
+                 if (res) {
+                     console.log("Key", res.key);
+                     console.dir("Data", res.value.name);
+                     res.continue();
+                 }
+             }
+         }*/
+    /******************#########################***************************/
+
 });
 
 /***************************formView****************************************/
@@ -42,11 +63,15 @@ var formView = Backbone.View.extend({
 
     model: new Event(),
 
-    el: '#event-form',
+    // el: '#event-form',
 
-    initialize: function() {
+    initialize: function(e) {
         console.log("form view")
+            // this.render(e);
     },
+
+
+
     events: {
         'click .add-event': 'add',
         //'click .add-event':  'addEvent'
@@ -80,28 +105,19 @@ var formView = Backbone.View.extend({
     },
     // rendering the list of events in db
     render: function(e) {
-        var source = $("#event-list-template").html();
-        console.log(source)
+        var source = $("#form-template").html();
+        // console.log(source)
         var template = Handlebars.compile(source);
-        console.log(template)
-
-
-        var context = { eventName: "My New Post", eventDate: "This is my first post!", description: "here" };
-        var html = template(context);
-
-        $("#addPerson").hide();
-        this.$el.append(html);
+        // console.log(template())
+         $("#addPerson").hide();
+        this.$el.html(template());
+        console.log(this.$el)
+        //var context = {title: "My New Post", body: "This is my first post!"};
         return this;
-
-
-        console.log("^&^&^&^&^&^&^&^&^&^&^&^&^&^&^&^&^&^&^&^&")
-
-
     }
-
 });
-//var fv= new formView();
 
+// new formView();
 /***********************addEventview********************************************/
 
 var addEventView = Backbone.View.extend({
@@ -109,7 +125,7 @@ var addEventView = Backbone.View.extend({
     el: '#addPerson', // eform
 
     initialize: function() {
-        console.log("addEventview getting initialized")
+        //console.log("addEventview getting initialized")
 
     },
 
@@ -129,17 +145,61 @@ var addEventView = Backbone.View.extend({
     },
     // rendering the form
     render: function(e) {
-        var source = $("#form-template").html();
+
+
+
+        var source = $("#event-list-template").html();
         //console.log(source)
         var template = Handlebars.compile(source);
         //console.log(template)
 
-        this.$el.append(template);
-        //var context = {title: "My New Post", body: "This is my first post!"};
-        new formView();
-        return this;
+        /******************#########################***************************/
+        var transaction = db.transaction(["EVENTDATA6"], "readonly");
+        var objectStore = transaction.objectStore("EVENTDATA6");
 
-   }
+        var cursor = objectStore.openCursor();
+
+        cursor.onsuccess = function(e) {
+                var res = e.target.result;
+                console.log(res)
+
+                if (res) {
+
+  var context = { eventName: res.value.name, eventDate: res.value.eventDate, description: res.value.description};
+   
+   var html = template(context);
+
+$("#addPerson").show();
+$("#form-div").hide();
+$(".container").append(html);
+
+
+                    res.continue();
+                    }
+
+                }
+                //$(".container").html()
+
+
+            
+            /******************#########################***************************/
+
+
+        //var context = { eventName: "My New Post", eventDate: "This is my first post!", description: "here" };
+        //var html = template(context);
+
+
+        //this.$el.append(html);
+                                //this.$el.append(html);
+        //console.log(this.$el)
+
+
+
+        //console.log("^&^&^&^&^&^&^&^&^&^&^&^&^&^&^&^&^&^&^&^&")
+
+
+    }
+
 });
 
 var aev = new addEventView();
@@ -149,6 +209,9 @@ var aev = new addEventView();
 var Router = Backbone.Router.extend({
     initialize: function() {
         console.log("router initialized addEventview also initialized");
+
+
+
     },
 
     routes: {
@@ -159,14 +222,16 @@ var Router = Backbone.Router.extend({
 
     },
     addEvent: function() {
-        console.log("addEvent")
-        new addEventView().render(event);
+        var form = new formView();
+        // console.log("addEvent",new formView().render().$el)
+        $(".container").html("");
+        $(".container").html(form.render().$el);
 
 
     },
     eventsList: function() {
 
-        new formView().render(event);
+        new addEventView().render(event);
 
         console.log("shows evets list")
 
@@ -174,10 +239,16 @@ var Router = Backbone.Router.extend({
 
 
 });
-var router = new Router();
-Backbone.history.start(); // to check what is after #
+// var router = new Router();
+
 
 /*******************************************************************/
+
+
+
+/*******************************************************************/
+
+
 
 $(document).submit(function(e) { // this statement stops from page refreshing or yu can use return false
     e.preventDefault();

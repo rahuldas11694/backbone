@@ -9,10 +9,12 @@
 </head>
 
 <body>
+
     <form id="addPerson" action="">
         <!--<section id="routemenu"> <input type="text" placeholder="Name of the person"></section>-->
         <input type="button" class="a" id="add-event" value="ADD EVENT" />
     </form>
+   <div class="container"></div>
     <script id="form-template" type="text/x-handlebars-template">
         <div id="form-div" class="frm-dv">
             <form id="event-form">
@@ -46,34 +48,29 @@
             </form>
         </div>
     </script>
-    <tr>
-        <td> <span class="eventName" >eventName</span></td>
-        <td><span class="eventDate">eventDate</span></td>
-        <td><span class="description">description</span></td>
-        <td><button class="btn btn-warning edit-event">EDIT</button>
+    <script id="event-list-template" type="text/x-handlebars-template">
+        <tr>
+            <td><span class="eventName">{{eventName}}</span></td>
+            <td><span class="eventDate">{{eventDate}}</span></td>
+            <td><span class="description">{{description}}</span></td>
+            <td>
+                <button class="btn btn-warning edit-event">EDIT</button>
             </td>
             <td>
                 <button class="btn btn-danger edit-event">DELETE</button>
-            </td>
-    </tr>
-
-    <script id="event-list-template" type="text/x-handlebars-template">
-        <tr>
-            <td><span class="eventName">{{eventName}</span></td>
-            <td><span class="eventDate">{{eventDate}}</span></td>
-            <td><span class="description">{{description}}</span></td>
+            </td></tr>
     </script>
     <!--<script id="personTemplate" type="text/template">
-	<span><strong><%= name %></strong> (<%= age %>) - <%= occupation %></span> 
-	<button class="edit">Edit</button>
-	<button class="delete">Delete</button>
+    <span><strong><%= name %></strong> (<%= age %>) - <%= occupation %></span> 
+    <button class="edit">Edit</button>
+    <button class="delete">Delete</button>
 </script>
 -->
     <script src="/Users/rahulsurvase/crud/js/underscore.js"></script>
     <script src="/Users/rahulsurvase/crud/js/jquery.js"></script>
     <script src="/Users/rahulsurvase/crud/js/handlebars.js"></script>
     <script src="/Users/rahulsurvase/crud/js/backbone.js"></script>
-    <script src="/Users/rahulsurvase/crud/event/js/formView.js"></script>
+    <script src="/Users/rahulsurvase/crud/event/js/formView3.js"></script>
     <script src="/Users/rahulsurvase/crud/event/js/main.js"></script>
 </body>
 

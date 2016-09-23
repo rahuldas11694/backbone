@@ -17,7 +17,7 @@ var db;
 //console.log("request open")
 // here we are creating and opening the db connection 
 
-var request = window.indexedDB.open("EVENT3", 1);
+var request = window.indexedDB.open("EVENT6", 1);
 
 request.onerror = function(event) {
     console.log("error: ");
@@ -30,11 +30,14 @@ request.onsuccess = function(event) {
     //console.log("event.target.result", event.target.result);
     //console.log("db here", db)
 
+    router = new Router();
+Backbone.history.start(); // to check what is after #
+
 };
 
 request.onupgradeneeded = function(event) {
     var db = event.target.result; // EVENTDATA is name of the TABLE ie object store
-    var objectStore = db.createObjectStore("EVENTDATA3", { keyPath: "id", autoIncrement: true });
+    var objectStore = db.createObjectStore("EVENTDATA6", { keyPath: "id", autoIncrement: true });
 
     console.log("objectStore created", objectStore)
     console.log("objectStore.IDBObjectStore.keyPath", objectStore.IDBObjectStore)

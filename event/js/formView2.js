@@ -15,8 +15,8 @@ var Event = Backbone.Model.extend({
         //here
         console.log("save fun called and createObjectStore here")
 
-        var trans = db.transaction(["EVENTDATA5"], "readwrite")
-            .objectStore("EVENTDATA5").add(json)
+        var trans = db.transaction(["EVENTDATA4"], "readwrite")
+            .objectStore("EVENTDATA4").add(json)
 
         // you can also use this 
 
@@ -47,6 +47,9 @@ var formView = Backbone.View.extend({
     initialize: function() {
         console.log("form view")
     },
+
+
+
     events: {
         'click .add-event': 'add',
         //'click .add-event':  'addEvent'
@@ -89,7 +92,7 @@ var formView = Backbone.View.extend({
         var context = { eventName: "My New Post", eventDate: "This is my first post!", description: "here" };
         var html = template(context);
 
-        $("#addPerson").hide();
+
         this.$el.append(html);
         return this;
 
@@ -134,12 +137,21 @@ var addEventView = Backbone.View.extend({
         var template = Handlebars.compile(source);
         //console.log(template)
 
-        this.$el.append(template);
+        this.$el.empty().append(template);
         //var context = {title: "My New Post", body: "This is my first post!"};
         new formView();
+
+
+
+
         return this;
 
-   }
+
+
+    }
+
+
+
 });
 
 var aev = new addEventView();
@@ -149,6 +161,9 @@ var aev = new addEventView();
 var Router = Backbone.Router.extend({
     initialize: function() {
         console.log("router initialized addEventview also initialized");
+
+
+
     },
 
     routes: {
@@ -160,7 +175,7 @@ var Router = Backbone.Router.extend({
     },
     addEvent: function() {
         console.log("addEvent")
-        new addEventView().render(event);
+        new addEventView().render(event)
 
 
     },
@@ -178,6 +193,12 @@ var router = new Router();
 Backbone.history.start(); // to check what is after #
 
 /*******************************************************************/
+
+
+
+/*******************************************************************/
+
+
 
 $(document).submit(function(e) { // this statement stops from page refreshing or yu can use return false
     e.preventDefault();
