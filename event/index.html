@@ -15,7 +15,6 @@
             <!--<section id="routemenu"> <input type="text" placeholder="Name of the person"></section>-->
             <input type="button" class="a" id="add-event" value="ADD EVENT" />
         </form>
-        
     </script>
     <script id="form-template" type="text/x-handlebars-template">
         <div id="form-div" class="frm-dv">
@@ -23,11 +22,11 @@
                 <ul class="form-ul">
                     <li>
                         <label for="name">Event Name:</label>
-                        <input type="text" name="eventName" id="name" value="" />
+                        <input type="text" name="eventName" id="name" value="{{eventName}}" />
                     </li>
                     <li>
                         <label for="email">Email:</label>
-                        <input type="text" name="email" id="email" />
+                        <input type="text" name="email" id="email" value="{{email}}"/>
                     </li>
                     <li>
                         <label for="date">Date:</label>
@@ -35,11 +34,11 @@
                     </li>
                     <li>
                         <label for="comments" class="descl">Description of Event:</label>
-                        <textarea name="description" id="desc" cols="25" rows="3"></textarea>
+                        <textarea name="description" id="desc" cols="25" rows="3" value="{{description}}"></textarea>
                     </li>
                     <li>
                         <label for="location">Place:</label>
-                        <input type="select" name="location" id="place" />
+                        <input type="select" name="location" id="place" value="{{location}}" />
                     </li>
                     <li>
                         <a href="/Users/rahulsurvase/crud/event/index.html">
@@ -50,17 +49,17 @@
             </form>
         </div>
     </script>
-    
     <script id="event-list-template" type="text/x-handlebars-template">
         <tr class="list">
-            <td><span class="eventName">{{eventName}}</span></td>
-            <td><span class="eventDate">{{eventDate}}</span></td>
-            <td><span class="description">{{description}}</span></td>
+            <td><span class="eventName" id={{id}} >{{eventName}}</span></td>
+            <td><span class="eventDate" id={{id}}>{{eventDate}}</span></td>
+            <td><span class="description" id={{id}}>{{description}}</span></td>
             <td>
-                <button class="btn btn-warning edit-event">EDIT</button>
-            </td>
+                <button class="btn btn-warning edit-event" id={{id}}>EDIT</button>
+</td>
+
             <td>
-                <button class="btn btn-danger delete-event">DELETE</button>
+                <button class="btn btn-danger delete-event" id={{id}}>DELETE</button>
             </td>
         </tr>
     </script>

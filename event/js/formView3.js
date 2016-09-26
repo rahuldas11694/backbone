@@ -73,10 +73,10 @@ var formView = Backbone.View.extend({ // add/edit form view
 
         }
         this.model.save(json); // calling the save fun to stor data in db 
-         
+
     },
 
-    
+
 
     // rendering the list of events in db
     render: function(e) {
@@ -84,8 +84,8 @@ var formView = Backbone.View.extend({ // add/edit form view
         // console.log(source)
         var template = Handlebars.compile(source);
         // console.log(template())
-        $("#addPerson").hide();
-        this.$el.html(template());
+        // $("#addPerson").hide();
+        this.$el.html(template(this.model.toJSON()));
         console.log(this.$el)
 
         return this;
@@ -99,15 +99,19 @@ var addEventView = Backbone.View.extend({ // main eventslist view
     initialize: function() {
         //console.log("addEventview getting initialized")
 
+        $("#addPerson").show();
+
+
     },
 
     events: {
+
         'click #add-event': 'onClick'
 
     },
-    
-     
-   
+
+
+
 
     onClick: function() {
 
@@ -118,10 +122,10 @@ var addEventView = Backbone.View.extend({ // main eventslist view
     render: function(e) {
         var source = $("#events-list-add-template").html()
 
-       //console.log(source)
+        //console.log(source)
         var template = Handlebars.compile(source);
-        this.$el.html( template())
-        //console.log(template)
+        this.$el.html(template())
+            //console.log(template)
 
 
         /******************#########################***************************/
@@ -131,31 +135,25 @@ var addEventView = Backbone.View.extend({ // main eventslist view
         var cursor = objectStore.openCursor();
 
         cursor.onsuccess = function(e) {
-               
+
             var res = e.target.result;
-            console.log(res)
+
+            console.log("#%#%#%#%#%#%#%#%#%#%#%#%#%", res)
 
 
+            if (res != null) {
+                var context = { eventName: res.value.name, eventDate: res.value.eventDate, description: res.value.description, id: res.key };
 
-              
+                var ev = new EventsView({
 
-            if (res) {
-                 
+                    model: new Event(context)
 
-                var context = { eventName: res.value.name, eventDate: res.value.eventDate, description: res.value.description };
-            var ev= new EventsView({
-                model:new Event(context)
-            });
-            $(".container").append(ev.render().$el)
-                 
-                 
-                
-               
+                });
 
+                $(".container").append(ev.render().$el)
 
                 res.continue();
             }
-            
         }
         return this
     }
@@ -163,52 +161,75 @@ var addEventView = Backbone.View.extend({ // main eventslist view
 });
 // var aev = new addEventView();
 
+var EventsView = Backbone.View.extend( // event view
+    {
+
+        // el:'.list',
+        initialize: function() {
+            console.log("*************$$$$$$$$$$$");
+        },
+        render: function() {
+            var source = $("#event-list-template").html();
+            //console.log(source)
+            var template = Handlebars.compile(source);
+            //console.log(template)
+
+            var html = template(this.model.toJSON());
+
+            // $("#addPerson").show();
+            // $("#form-div").hide();
+            this.$el.html(html);
+            return this
+        },
+
+        events: {
+            'click .edit-event': 'update',
+            'click .delete-event': 'delete'
+
+
+        },
+
+        update: function(event) {
+            var id = event.target.id;
+            console.log(id)
+            var trans = db.transaction(["EVENTDATA2"], "readonly")
+                .objectStore("EVENTDATA2").get(Number(id));
+            console.log(trans);
+
+            trans.onsuccess= function(e)
+            {
+             console.log(e.target.result.name)
+             var data =e.target.result;
+
+
+             router.navigate('edit', { trigger: true });
+            };
 
 
 
-var EventsView= Backbone.View.extend( // event view
-{
 
-// el:'.list',
-
-initialize:function()
-{
-console.log("*************$$$$$$$$$$$");
-},
-render: function(){
-      var source = $("#event-list-template").html();
-        //console.log(source)
-        var template = Handlebars.compile(source);
-        //console.log(template)
-
- var html = template(this.model.toJSON());
-
-                // $("#addPerson").show();
-                // $("#form-div").hide();
-                this.$el.html(html);
-return this
-},
-
-events:
-{
-    'click .edit-event' : 'update',
-
-},
-
-update:function()
-{   
-    router.navigate('edit', { trigger: true });
-    console.log(" UPDATE CALLED  ");
-}
- 
-
-});
+            
 
 
+        },
+
+        delete: function(event) {
+            var id = event.target.id;
+            console.log("DELETE++++", event.target.id)
+            var t = db.transaction(["EVENTDATA2"], "readwrite");
+            var request = t.objectStore("EVENTDATA2").delete(Number(id));
 
 
+            request.onsuccess = function(event) {
+                alert("DELETED");
+
+            };
 
 
+        }
+
+
+    });
 
 var Router = Backbone.Router.extend({
     initialize: function() {
@@ -229,7 +250,7 @@ var Router = Backbone.Router.extend({
         $(".container").html(form.render().$el);
 
     },
-    
+
     eventsList: function() {
 
         $(".container").html(new addEventView().render(event).$el);
@@ -237,16 +258,30 @@ var Router = Backbone.Router.extend({
         console.log("shows evets list")
 
     },
-    
-    edits:function()
-    {
-        console.log("navigated on edit")
-        //new EventsView();
-        
+
+    edits: function(id) {
+        console.log("navigated on edit",id)
+
+
+        var form = new formView();
+
+        console.log("@@@@@@@", db)
+
+        $(".container").html(form.render().$el);
+
+
+
+
+
+
+
+
+
     }
+
 });
 
 
-//$(document).submit(function(e) { // this statement stops from page refreshing or yu can use return false
-  //  e.preventDefault();
-//});
+$(document).submit(function(e) { // this statement stops from page refreshing or yu can use return false
+    e.preventDefault();
+});
