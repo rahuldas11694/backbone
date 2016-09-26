@@ -188,6 +188,6 @@ var Router = Backbone.Router.extend({
 });
 
 
-//$(document).submit(function(e) { // this statement stops from page refreshing or yu can use return false
-  //  e.preventDefault();
-//});
+$(document).submit(function(e) { // this statement stops from page refreshing or yu can use return false
+    e.preventDefault();
+});

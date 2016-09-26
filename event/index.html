@@ -9,12 +9,14 @@
 </head>
 
 <body>
-
-    <form id="addPerson" action="">
-        <!--<section id="routemenu"> <input type="text" placeholder="Name of the person"></section>-->
-        <input type="button" class="a" id="add-event" value="ADD EVENT" />
-    </form>
-   <div class="container"></div>
+    <div class="container"></div>
+    <script id="events-list-add-template" type="text/x-handlebars-template">
+        <form id="addPerson" action="">
+            <!--<section id="routemenu"> <input type="text" placeholder="Name of the person"></section>-->
+            <input type="button" class="a" id="add-event" value="ADD EVENT" />
+        </form>
+        
+    </script>
     <script id="form-template" type="text/x-handlebars-template">
         <div id="form-div" class="frm-dv">
             <form id="event-form">
@@ -48,8 +50,9 @@
             </form>
         </div>
     </script>
+    
     <script id="event-list-template" type="text/x-handlebars-template">
-        <tr>
+        <tr class="list">
             <td><span class="eventName">{{eventName}}</span></td>
             <td><span class="eventDate">{{eventDate}}</span></td>
             <td><span class="description">{{description}}</span></td>
@@ -57,8 +60,9 @@
                 <button class="btn btn-warning edit-event">EDIT</button>
             </td>
             <td>
-                <button class="btn btn-danger edit-event">DELETE</button>
-            </td></tr>
+                <button class="btn btn-danger delete-event">DELETE</button>
+            </td>
+        </tr>
     </script>
     <!--<script id="personTemplate" type="text/template">
     <span><strong><%= name %></strong> (<%= age %>) - <%= occupation %></span> 

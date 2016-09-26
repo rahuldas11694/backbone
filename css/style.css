@@ -9,13 +9,14 @@ margin-left:20%;
 }
 #add-event
 {
-    width: 120px;
-
+    width: 171px;
     position: relative;
     float: center;
-    left: 3%;
-
-    margin: 16px;
+    left: 12%;
+    margin: 21px;
+    font-size: 1em;
+    background-color: yellow;
+    border: solid green 1px;
 
 
 }
@@ -99,6 +100,34 @@ list-style-type: none;
     background-color: #efefef;
     padding-top: 10px;
     padding-bottom: 10px;
+}
 
+.eventName
+{
+position: relative;
+left:10px;
+font-size: 21px
+}
+.eventDate
+{
+position: relative;
+left:36px;
+font-size: 21px
 
+}
+
+.description
+{
+position: relative;
+left:77px;
+font-size: 21px
+
+}
+.btn
+{
+position: relative;
+left:120px;
+background-color: yellow;
+    font-size: 13px;
+    border: solid red 1px;
 }

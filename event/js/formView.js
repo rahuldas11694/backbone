@@ -49,6 +49,7 @@ var formView = Backbone.View.extend({
     },
     events: {
         'click .add-event': 'add',
+
         //'click .add-event':  'addEvent'
     },
 
