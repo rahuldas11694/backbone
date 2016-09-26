@@ -28,8 +28,26 @@ var Event = Backbone.Model.extend({
         request.onerror = function(event) {
 
             alert("Unable to add data\r\ndata aready exists in your database! ");
+        
         };
     },
+
+    edit:function(event)
+    { 
+        console.log(event)
+      //var id = event.target.id;
+  
+        //console.log(id)
+        //var trans = db.transaction(["EVENTDATA2"], "readwrite")
+          //  .objectStore("EVENTDATA2").get(Number(id));
+        //console.log(trans);
+
+        //trans.onsuccess = function(e) {
+          //  console.log(e.target.result.name)
+           // var data = e.target.result; 
+      //}
+  }
+    
 });
 
 /***************************formView****************************************/
@@ -75,6 +93,23 @@ var formView = Backbone.View.extend({ // add/edit form view
         this.model.save(json); // calling the save fun to stor data in db 
 
     },
+
+    edit: function(event)
+    {
+        var id = event.target.id;
+  
+        console.log(id)
+        var trans = db.transaction(["EVENTDATA2"], "readwrite")
+            .objectStore("EVENTDATA2").get(Number(id));
+        console.log(trans);
+
+        trans.onsuccess = function(e) {
+           console.log(e.target.result.name)
+            var data = e.target.result; 
+      }
+
+    },
+
 
 
 
@@ -190,25 +225,41 @@ var EventsView = Backbone.View.extend( // event view
         },
 
         update: function(event) {
-            var id = event.target.id;
-            console.log(id)
-            var trans = db.transaction(["EVENTDATA2"], "readonly")
-                .objectStore("EVENTDATA2").get(Number(id));
-            console.log(trans);
+       /****************************************************************/
+/*          var id = event.target.id;
+  
+        console.log(id)
+        var trans = db.transaction(["EVENTDATA2"], "readwrite")
+            .objectStore("EVENTDATA2").get(Number(id));
+        console.log(trans);
 
-            trans.onsuccess= function(e)
-            {
-             console.log(e.target.result.name)
-             var data =e.target.result;
+        trans.onsuccess = function(e) {
+            console.log(e.target.result.name)
+            var data = e.target.result;                                
+ 
+       
+
+            router.navigate('edit', { trigger: true });
+        };*/
+/****************************************************************/
+        router.navigate('edit', { trigger: true });
+         var id = event.target.id;
+  
+        console.log(id)
+        var trans = db.transaction(["EVENTDATA2"], "readwrite")
+            .objectStore("EVENTDATA2").get(Number(id));
+        console.log(trans);
+
+        trans.onsuccess = function(e) {
+            console.log(e.target.result.name)
+            var data = e.target.result;                                
+ 
+       
+
+            router.navigate('edit', { trigger: true });
 
 
-             router.navigate('edit', { trigger: true });
-            };
 
-
-
-
-            
 
 
         },
@@ -224,11 +275,7 @@ var EventsView = Backbone.View.extend( // event view
                 alert("DELETED");
 
             };
-
-
         }
-
-
     });
 
 var Router = Backbone.Router.extend({
@@ -259,29 +306,19 @@ var Router = Backbone.Router.extend({
 
     },
 
-    edits: function(id) {
-        console.log("navigated on edit",id)
-
-
+    edits: function() {
         var form = new formView();
-
-        console.log("@@@@@@@", db)
-
-        $(".container").html(form.render().$el);
+        form.edit(event);
 
 
+   //new Event().edit(event);
+        //$(".container").html(form.render().$el);
 
-
-
-
-
-
-
-    }
+}
 
 });
 
 
-$(document).submit(function(e) { // this statement stops from page refreshing or yu can use return false
-    e.preventDefault();
-});
+//$(document).submit(function(e) { // this statement stops from page refreshing or yu can use return false
+  //  e.preventDefault();
+//});
