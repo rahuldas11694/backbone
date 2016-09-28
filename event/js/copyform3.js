@@ -14,7 +14,14 @@ var Event = Backbone.Model.extend({
 
 
     save: function(json) {
-        //here
+
+        if(this.model)
+        {
+            this.model.on("change",new formView().update(json),this);
+            console.log(this.model)
+            return
+        }
+
 
         console.log("save fun called and createObjectStore here")
         console.log(db)
@@ -43,11 +50,11 @@ var Event = Backbone.Model.extend({
         //console.log(trans);
 
         trans.onsuccess = function(e) {
-            console.log(e.target.result)
+            console.log(e.target.result.name)
             var data = e.target.result;
             console.log(data);
             //that.set(data)
-            var setData = that.set({ eventName: data.eventName, eventDate: data.eventDate, location: data.location, email: data.email, description: data.description });
+            var setData = that.set({ eventName: data.name, eventDate: data.eventDate, location: data.location, email: data.email, description: data.description });
             callback(data);
             console.log("AFTER CALL BACK", setData)
         }
@@ -58,16 +65,18 @@ var Event = Backbone.Model.extend({
 var formView = Backbone.View.extend({ // add/edit form view
 
     model: new Event(),
-    initialize: function(e) {
+    initialize: function(data) {
         console.log("form view")
+        
 
-        this.listenTo(this.model, 'change', this.render);
     },
     events: {
         'click .add-event': 'add',
     },
 
     add: function() {
+
+        
 
         router.navigate('events', { trigger: true });
         //console.log("getting clicked")
@@ -80,7 +89,7 @@ var formView = Backbone.View.extend({ // add/edit form view
 
         console.log("calling to model save")
         var json = {
-            eventName: eventName,
+            name: eventName,
             email: email,
             location: location,
             eventDate: eventDate,
@@ -88,6 +97,7 @@ var formView = Backbone.View.extend({ // add/edit form view
         }
 
         console.log("JSON", json)
+         
 
         this.model.save(json); // calling the save fun to stor data in db 
 
@@ -98,16 +108,19 @@ var formView = Backbone.View.extend({ // add/edit form view
 
     update: function(json) {
         var trans = db.transaction(["EVENTDATA2"], "readwrite")
-            .objectStore("EVENTDATA2").put(json)
+            .objectStore("EVENTDATA2").put(json);
 },
     // rendering the list of events in db
     render: function(e) {
+
+
         var source = $("#form-template").html();
         // console.log(source)
         var template = Handlebars.compile(source);
         // console.log(template())
         // $("#addPerson").hide();
         this.$el.html(template(this.model.toJSON()));
+
 
         // this.$el.html(template());
         return this;
@@ -156,8 +169,8 @@ var addEventView = Backbone.View.extend({ // main eventslist view
 
 
             if (res != null) {
-                var context = { eventName: res.value.eventName, eventDate: res.value.eventDate, email:res.value.email, description: res.value.description, id: res.key };
-                 console.log(context)
+                var context = { eventName: res.value.name, eventDate: res.value.eventDate, description: res.value.description, id: res.key };
+
                 var ev = new EventsView({
 
                     model: new Event(context)
