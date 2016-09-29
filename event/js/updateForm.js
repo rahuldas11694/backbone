@@ -54,10 +54,58 @@ var Event = Backbone.Model.extend({
            
 
                 console.log("AFTER CALL BACK id ==", id,"and data  id",data.id,data)
-           } //edit
+
+
+                //  var putdata = data;
+                // putdata.eventName=$("#name").val();
+
+                //  var objectStore = db.transaction(["EVENTDATA2"], "readwrite")
+                //                .objectStore("EVENTDATA2");
+
+                // var put_request = objectStore.put(putdata); 
+
+                // put_request.onsuccess=function()
+                // {
+                //     console.log("UPDATED THE LIST TOO");
+                // };
+
+                //new Event().update(id)
+
+            } //edit
         // console.log("update")
     }
-    
+    // /*******************************************************************/
+    // update: function(id) {
+    //     console.log("update id==", id)
+
+    //     var transaction = db.transaction(["EVENTDATA2"], "readwrite");
+
+    //     var objectStore = transaction.objectStore("EVENTDATA2");
+
+    //     objectStore.openCursor().onsuccess = function(event) {
+    //         var cursor = event.target.result;
+    //         console.log(cursor)
+    //          if (cursor) {
+    //         if (cursor.key === cursor.value.id) {
+    //             var updateData = cursor.value;
+
+    //             console.log("update Data", updateData);
+
+    //             updateData.eventName= $("#name").val();
+
+
+    //             console.log("TRUE", cursor.value.id)
+
+    //             var request = cursor.put(updateData);
+
+    //             request.onsuccess=function()
+    //                 {console.log("updated name")};
+    //         }
+    //         //cursor.continue();
+    //         }
+    //         else{console.log("not updated")}
+    //     }
+    // }
 }); // model end
 
 /***************************formView****************************************/
@@ -97,12 +145,12 @@ var formView = Backbone.View.extend({ // add/edit form view
             //new Event().update();      
         this.model.save(json); // calling the save fun to stor data in db 
 
-        //return false
+        return false
     },
 
     update: function(id) {
         console.log("update id==", id)
-        var that = this
+        var that = this;
             /*******************************************************************/
         var transaction = db.transaction(["EVENTDATA2"], "readwrite");
 
@@ -115,16 +163,23 @@ var formView = Backbone.View.extend({ // add/edit form view
              if (cursor) {
                 console.log(cursor.key, that.model.get("id"))
             if (cursor.key == that.model.get("id")) {
-                var updateData = cursor.value;
+                var updateName = cursor.value;
+                var updateDate = cursor.value;
+                var updateDescription = cursor.value;
+                var updateEmail = cursor.value;
+                var updateLocation= cursor.value;
+                // var updateDate =
 
-                console.log("update Data", updateData);
+                console.log("update Data", updateName);
 
-                updateData.eventName= $("#name").val();
+                updateName.eventName= $("#name").val();
+                updateDate.eventDate = $("#date").val();
+                updateDescription.description= $("#desc").val();
+                updateEmail.email = $("#email").val();
+                updateLocation.location=$("#place").val();
+                console.log("TRUE", updateName)
 
-
-                console.log("TRUE", updateData)
-
-                var request = cursor.update(updateData);
+                var request = cursor.update(updateName, updateDate,updateEmail,updateDescription);
 
                 request.onsuccess=function()
                     {console.log("updated name")
@@ -134,7 +189,7 @@ var formView = Backbone.View.extend({ // add/edit form view
 
 
             }
-            //cursor.continue();
+            cursor.continue();
             }
             else{console.log("not updated")}
         }
