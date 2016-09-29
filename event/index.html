@@ -26,11 +26,11 @@
                     </li>
                     <li>
                         <label for="email">Email:</label>
-                        <input type="text" name="email" id="email" value="{{email}}"/>
+                        <input type="text" name="email" id="email" value="{{email}}" />
                     </li>
                     <li>
                         <label for="date">Date:</label>
-                        <input type="date" name="eventDate" id="date"  value="{{eventDate}}"/>
+                        <input type="date" name="eventDate" id="date" value="{{eventDate}}" />
                     </li>{{id}}
                     <li>
                         <label for="comments" class="descl">Description of Event:</label>
@@ -51,13 +51,12 @@
     </script>
     <script id="event-list-template" type="text/x-handlebars-template">
         <tr class="list">
-            <td><span class="eventName" id={{id}} >{{eventName}}</span></td>
+            <td><span class="eventName" id={{id}}>{{eventName}}</span></td>
             <td><span class="eventDate" id={{id}}>{{eventDate}}</span></td>
             <td><span class="description" id={{id}}>{{description}}</span></td>
             <td>
                 <button class="btn btn-warning edit-event" id={{id}}>EDIT</button>
-</td>
-
+            </td>
             <td>
                 <button class="btn btn-danger delete-event" id={{id}}>DELETE</button>
             </td>
@@ -73,7 +72,17 @@
     <script src="/Users/rahulsurvase/crud/js/jquery.js"></script>
     <script src="/Users/rahulsurvase/crud/js/handlebars.js"></script>
     <script src="/Users/rahulsurvase/crud/js/backbone.js"></script>
-    <script src="/Users/rahulsurvase/crud/event/js/updateForm.js"></script>
+    <!--<script src="/Users/rahulsurvase/crud/event/js/updateForm.js"></script>   -->
+
+    <script src="/Users/rahulsurvase/crud/event/js/model/model.js"></script>
+
+    <script src="/Users/rahulsurvase/crud/event/js/view/EventsView.js"></script>
+
+        <script src="/Users/rahulsurvase/crud/event/js/view/form_View.js"></script>
+
+            <script src="/Users/rahulsurvase/crud/event/js/view/addEventView.js"></script>
+                <script src="/Users/rahulsurvase/crud/event/js/controller/router.js"></script>
+
     <script src="/Users/rahulsurvase/crud/event/js/main.js"></script>
 </body>
 

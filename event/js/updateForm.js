@@ -56,56 +56,16 @@ var Event = Backbone.Model.extend({
                 console.log("AFTER CALL BACK id ==", id,"and data  id",data.id,data)
 
 
-                //  var putdata = data;
-                // putdata.eventName=$("#name").val();
 
-                //  var objectStore = db.transaction(["EVENTDATA2"], "readwrite")
-                //                .objectStore("EVENTDATA2");
 
-                // var put_request = objectStore.put(putdata); 
 
-                // put_request.onsuccess=function()
-                // {
-                //     console.log("UPDATED THE LIST TOO");
-                // };
-
-                //new Event().update(id)
 
             } //edit
-        // console.log("update")
+
     }
-    // /*******************************************************************/
-    // update: function(id) {
-    //     console.log("update id==", id)
-
-    //     var transaction = db.transaction(["EVENTDATA2"], "readwrite");
-
-    //     var objectStore = transaction.objectStore("EVENTDATA2");
-
-    //     objectStore.openCursor().onsuccess = function(event) {
-    //         var cursor = event.target.result;
-    //         console.log(cursor)
-    //          if (cursor) {
-    //         if (cursor.key === cursor.value.id) {
-    //             var updateData = cursor.value;
-
-    //             console.log("update Data", updateData);
-
-    //             updateData.eventName= $("#name").val();
 
 
-    //             console.log("TRUE", cursor.value.id)
 
-    //             var request = cursor.put(updateData);
-
-    //             request.onsuccess=function()
-    //                 {console.log("updated name")};
-    //         }
-    //         //cursor.continue();
-    //         }
-    //         else{console.log("not updated")}
-    //     }
-    // }
 }); // model end
 
 /***************************formView****************************************/
@@ -313,9 +273,12 @@ var EventsView = Backbone.View.extend( // event view
 
             request.onsuccess = function(event) {
 
+             
 
             };
+
         }
+
     });
 
 var Router = Backbone.Router.extend({
@@ -364,6 +327,6 @@ var Router = Backbone.Router.extend({
 
 });
 
-$(document).submit(function(e) { // this statement stops from page refreshing or yu can use return false
-    e.preventDefault();
-});
+// $(document).submit(function(e) { // this statement stops from page refreshing or yu can use return false
+//     e.preventDefault();
+// });
