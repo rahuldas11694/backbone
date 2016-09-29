@@ -8,7 +8,7 @@ var Event = Backbone.Model.extend({
         location: '',
         eventDate: '',
         description: '',
-
+        idAttribute: "id"
 
     },
 
@@ -36,51 +36,29 @@ var Event = Backbone.Model.extend({
 
     edit: function(id, callback) {
         var that = this
-            //console.log(event)
+        console.log(event)
         var trans = db.transaction(["EVENTDATA2"], "readwrite")
             .objectStore("EVENTDATA2").get(Number(id));
 
         //console.log(trans);
 
         trans.onsuccess = function(e) {
-            console.log(e.target.result)
-            var data = e.target.result;
-            console.log(data);
-            //that.set(data)
-            var setData = that.set({ eventName: data.eventName, eventDate: data.eventDate, location: data.location, email: data.email, description: data.description });
-            callback(data);
-            console.log("AFTER CALL BACK", setData)
-/*******************************************************************/
-var transaction = db.transaction(["EVENTDATA2"], "readwrite");
-        var objectStore = transaction.objectStore("EVENTDATA2");
+                console.log("BBBBBBB", e.target.result)
+                var data = e.target.result;
+                console.log("BBBBBBBBBB", data);
+                //that.set(data)
+                var setData = that.set({ id: id, eventName: data.eventName, eventDate: data.eventDate, location: data.location, email: data.email, description: data.description });
+                 
 
-        objectStore.openCursor().onsuccess = function(event) {
-            var cursor = event.target.result;
-            console.log(cursor)
+                callback(data);
+           
 
-            if (cursor) {
-                var updateData =cursor.value
-                console.log(updateData);
-                var json ={
-                cursor.eventName = $('#name').val();
-                 cursor.email = $('#email').val();
-                 cursor.location = $('#place').val();
-                 cursor.eventDate = $('#date').val();
-                 cursor.description = $('#desc').val();
-                 if (cursor.key == ) {}
-                var request = cursor.update();
-
-
-
-
-
-/*******************************************************************/
-
-
-
-        }
+                console.log("AFTER CALL BACK id ==", id,"and data  id",data.id,data)
+           } //edit
+        // console.log("update")
     }
-});
+    
+}); // model end
 
 /***************************formView****************************************/
 var formView = Backbone.View.extend({ // add/edit form view
@@ -93,6 +71,7 @@ var formView = Backbone.View.extend({ // add/edit form view
     },
     events: {
         'click .add-event': 'add',
+        'click .edit-event': 'update',
     },
 
     add: function() {
@@ -114,20 +93,54 @@ var formView = Backbone.View.extend({ // add/edit form view
             eventDate: eventDate,
             description: description
         }
-
         console.log("JSON", json)
-
+            //new Event().update();      
         this.model.save(json); // calling the save fun to stor data in db 
 
-
-
-
+        //return false
     },
 
-    update: function(json) {
-        var trans = db.transaction(["EVENTDATA2"], "readwrite")
-            .objectStore("EVENTDATA2").put(json)
+    update: function(id) {
+        console.log("update id==", id)
+        var that = this
+            /*******************************************************************/
+        var transaction = db.transaction(["EVENTDATA2"], "readwrite");
+
+        var objectStore = transaction.objectStore("EVENTDATA2");
+
+        objectStore.openCursor().onsuccess = function(event) {
+            var cursor = event.target.result;
+            console.log(cursor)
+
+             if (cursor) {
+                console.log(cursor.key, that.model.get("id"))
+            if (cursor.key == that.model.get("id")) {
+                var updateData = cursor.value;
+
+                console.log("update Data", updateData);
+
+                updateData.eventName= $("#name").val();
+
+
+                console.log("TRUE", updateData)
+
+                var request = cursor.update(updateData);
+
+                request.onsuccess=function()
+                    {console.log("updated name")
+                        router.navigate('events', { trigger: true });
+                    };
+
+
+
+            }
+            //cursor.continue();
+            }
+            else{console.log("not updated")}
+        }
+     return false
     },
+
     // rendering the list of events in db
     render: function(e) {
         var source = $("#form-template").html();
@@ -141,6 +154,7 @@ var formView = Backbone.View.extend({ // add/edit form view
         return this;
     }
 });
+
 /***********************addEventview********************************************/
 var addEventView = Backbone.View.extend({ // main eventslist view
     //model: new Event(),
@@ -171,47 +185,32 @@ var addEventView = Backbone.View.extend({ // main eventslist view
         this.$el.html(template())
             //console.log(template)
             /******************#########################***************************/
-        var transaction = db.transaction(["EVENTDATA2"], "readwrite");
+        var transaction = db.transaction(["EVENTDATA2"], "readonly");
         var objectStore = transaction.objectStore("EVENTDATA2");
 
-        objectStore.openCursor().onsuccess = function(event) {
-            var cursor = event.target.result;
-            console.log(cursor)
+        var cursor = objectStore.openCursor();
 
-            if (cursor) {
-                var updateData =cursor.value
-                console.log(updateData);
-                var json ={}
-                cursor.eventName = $('#name').val();
-                 cursor.email = $('#email').val();
-                 cursor.location = $('#place').val();
-                 cursor.eventDate = $('#date').val();
-                 cursor.description = $('#desc').val();
-                 if (cursor.key == ) {}
-                var request = cursor.update();
+        cursor.onsuccess = function(e) {
 
-                request.onsuccess = function(event) {
-                    var res = event.target.result
-                    if (res != null) {
+            var res = e.target.result;
 
-                        var context = { eventName: res.value.eventName, eventDate: res.value.eventDate, email: res.value.email, description: res.value.description, id: res.key };
-                        console.log(context)
-                        var request = cursor.update(context);
-                        var ev = new EventsView({
+            //console.log("#%#%#%#%#%#%#%#%#%#%#%#%#%", res)
 
-                            model: new Event(context)
 
-                        });
+            if (res != null) {
+                var context = { eventName: res.value.eventName, eventDate: res.value.eventDate, email: res.value.email, description: res.value.description, id: res.key };
+                //console.log(context)
+                var ev = new EventsView({
 
-                        $(".container").append(ev.render().$el)
+                    model: new Event(context)
 
-                        res.continue();
-                    }
-                }
+                });
+
+                $(".container").append(ev.render().$el)
+
+                res.continue();
             }
-
         }
-
         return this
     }
 
@@ -233,10 +232,7 @@ var EventsView = Backbone.View.extend( // event view
             //console.log(template)
 
             var html = template(this.model.toJSON());
-            //console.log(html)
 
-            // $("#addPerson").show();
-            // $("#form-div").hide();
             this.$el.html(html);
             return this
         },

@@ -31,7 +31,7 @@
                     <li>
                         <label for="date">Date:</label>
                         <input type="date" name="eventDate" id="date"  value="{{eventDate}}"/>
-                    </li>
+                    </li>{{id}}
                     <li>
                         <label for="comments" class="descl">Description of Event:</label>
                         <textarea name="desc" id="desc" cols="25" rows="3">{{description}}</textarea>
@@ -42,7 +42,7 @@
                     </li>
                     <li>
                         <a href="/Users/rahulsurvase/crud/event/index.html">
-                            <button class="btn btn-primary add-event" id="sb">Submit</button>
+                            <button class="btn btn-primary {{#if id}}edit-event{{else}}add-event{{/if}}" id="sb">Submit</button>
                         </a>
                     </li>
                 </ul>
@@ -73,7 +73,7 @@
     <script src="/Users/rahulsurvase/crud/js/jquery.js"></script>
     <script src="/Users/rahulsurvase/crud/js/handlebars.js"></script>
     <script src="/Users/rahulsurvase/crud/js/backbone.js"></script>
-    <script src="/Users/rahulsurvase/crud/event/js/formView3.js"></script>
+    <script src="/Users/rahulsurvase/crud/event/js/updateForm.js"></script>
     <script src="/Users/rahulsurvase/crud/event/js/main.js"></script>
 </body>
 

@@ -50,34 +50,6 @@ var Event = Backbone.Model.extend({
             var setData = that.set({ eventName: data.eventName, eventDate: data.eventDate, location: data.location, email: data.email, description: data.description });
             callback(data);
             console.log("AFTER CALL BACK", setData)
-/*******************************************************************/
-var transaction = db.transaction(["EVENTDATA2"], "readwrite");
-        var objectStore = transaction.objectStore("EVENTDATA2");
-
-        objectStore.openCursor().onsuccess = function(event) {
-            var cursor = event.target.result;
-            console.log(cursor)
-
-            if (cursor) {
-                var updateData =cursor.value
-                console.log(updateData);
-                var json ={
-                cursor.eventName = $('#name').val();
-                 cursor.email = $('#email').val();
-                 cursor.location = $('#place').val();
-                 cursor.eventDate = $('#date').val();
-                 cursor.description = $('#desc').val();
-                 if (cursor.key == ) {}
-                var request = cursor.update();
-
-
-
-
-
-/*******************************************************************/
-
-
-
         }
     }
 });
@@ -316,3 +288,59 @@ var Router = Backbone.Router.extend({
 $(document).submit(function(e) { // this statement stops from page refreshing or yu can use return false
     e.preventDefault();
 });
+
+
+
+
+
+
+
+
+                    /*******************************************************************/
+                    var transaction = db.transaction(["EVENTDATA2"], "readwrite");
+
+                    var objectStore = transaction.objectStore("EVENTDATA2");
+
+                    objectStore.openCursor().onsuccess = function(event) {
+                            var cursor = event.target.result;
+                            console.log(cursor)
+
+                            if (cursor) {
+                                var updateData = cursor.value
+                                console.log("update data", updateData);
+                                updateData.eventName = $("#name").val();
+                                console.log()
+                                    // var json ={
+                                    // eventName = $('#name').val();
+                                    //  email = $('#email').val();
+                                    //  location = $('#place').val();
+                                    //  eventDate = $('#date').val();
+                                    //  description = $('#desc').val();
+                                if (cursor.key == cursor.value.id) {
+                                    console.log("TRUE", cursor.value.id)
+
+                                    var request = cursor.update(updateData);
+
+                                }
+                                // var request = cursor.update();
+                            }
+
+
+                        } //openCursor end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
