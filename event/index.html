@@ -42,7 +42,7 @@
                     </li>
                     <li>
                         <a href="/Users/rahulsurvase/crud/event/index.html">
-                            <button class="btn btn-primary {{#if id}}edit-event{{else}}add-event{{/if}}" id="sb">Submit</button>
+                            <button class="btn btn-primary {{#if id}}edit-event{{else}}add-event{{/if}}" id={{id}}>Submit</button>
                         </a>
                     </li>
                 </ul>
@@ -62,27 +62,17 @@
             </td>
         </tr>
     </script>
-    <!--<script id="personTemplate" type="text/template">
-    <span><strong><%= name %></strong> (<%= age %>) - <%= occupation %></span> 
-    <button class="edit">Edit</button>
-    <button class="delete">Delete</button>
-</script>
--->
+    
     <script src="/Users/rahulsurvase/crud/js/underscore.js"></script>
     <script src="/Users/rahulsurvase/crud/js/jquery.js"></script>
     <script src="/Users/rahulsurvase/crud/js/handlebars.js"></script>
     <script src="/Users/rahulsurvase/crud/js/backbone.js"></script>
-    <!--<script src="/Users/rahulsurvase/crud/event/js/updateForm.js"></script>   -->
-
+    <script src="/Users/rahulsurvase/crud/event/js/view/firstview.js"></script>
     <script src="/Users/rahulsurvase/crud/event/js/model/model.js"></script>
-
     <script src="/Users/rahulsurvase/crud/event/js/view/EventsView.js"></script>
-
-        <script src="/Users/rahulsurvase/crud/event/js/view/form_View.js"></script>
-
-            <script src="/Users/rahulsurvase/crud/event/js/view/addEventView.js"></script>
-                <script src="/Users/rahulsurvase/crud/event/js/controller/router.js"></script>
-
+    <script src="/Users/rahulsurvase/crud/event/js/view/form_View.js"></script>
+    <script src="/Users/rahulsurvase/crud/event/js/view/addEventView.js"></script>
+    <script src="/Users/rahulsurvase/crud/event/js/controller/router.js"></script>
     <script src="/Users/rahulsurvase/crud/event/js/main.js"></script>
 </body>
 

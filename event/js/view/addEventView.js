@@ -6,7 +6,8 @@ var addEventView = Backbone.View.extend({ // main eventslist view
     initialize: function() {
         console.log("addEventview getting initialized")
 
-        $("#addPerson").show();
+        
+
     },
 
     events: {
@@ -25,35 +26,39 @@ var addEventView = Backbone.View.extend({ // main eventslist view
 
         //console.log(source)
         var template = Handlebars.compile(source);
+        //console.log(this.el)
+        //console.log(this.$el)
         this.$el.html(template())
+
+        new Event().displayList();
             //console.log(template)
-            /******************#########################***************************/
-        var transaction = db.transaction(["EVENTDATA2"], "readonly");
-        var objectStore = transaction.objectStore("EVENTDATA2");
+         /******************#########################***************************/
+        // var transaction = db.transaction(["EVENTDATA2"], "readonly");
+        // var objectStore = transaction.objectStore("EVENTDATA2");
 
-        var cursor = objectStore.openCursor();
+        // var cursor = objectStore.openCursor();
 
-        cursor.onsuccess = function(e) {
+        // cursor.onsuccess = function(e) {
 
-            var res = e.target.result;
+        //     var res = e.target.result;
 
-            //console.log("#%#%#%#%#%#%#%#%#%#%#%#%#%", res)
+        //     //console.log("#%#%#%#%#%#%#%#%#%#%#%#%#%", res)
 
 
-            if (res != null) {
-                var context = { eventName: res.value.eventName, eventDate: res.value.eventDate, email: res.value.email, description: res.value.description, id: res.key };
-                //console.log(context)
-                var ev = new EventsView({
+        //     if (res != null) {
+        //         var context = { eventName: res.value.eventName, eventDate: res.value.eventDate, email: res.value.email, description: res.value.description, id: res.key };
+        //         //console.log(context)
+        //         var ev = new EventsView({
 
-                    model: new Event(context)
+        //             model: new Event(context)
 
-                });
+        //         });
+                    
+                // $(".container").append(ev.render().$el)
 
-                $(".container").append(ev.render().$el)
-
-                res.continue();
-            }
-        }
+        //         res.continue();
+        //     }
+        // }
         return this
     }
 

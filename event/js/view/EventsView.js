@@ -4,9 +4,11 @@ var EventsView = Backbone.View.extend( // event view
         // el:'.list',
         initialize: function() {
             //console.log("*************$$$$$$$$$$$");
-
+           // new addEventView().render(e);
+$("#addPerson").show();
         },
         render: function() {
+            
             var source = $("#event-list-template").html();
             //console.log(source)
             var template = Handlebars.compile(source);
@@ -33,15 +35,22 @@ var EventsView = Backbone.View.extend( // event view
         delete: function(event) {
             var id = event.target.id;
             console.log("DELETE++++", event.target.id)
-            var t = db.transaction(["EVENTDATA2"], "readwrite");
-            var request = t.objectStore("EVENTDATA2").delete(Number(id));
+            new Event().deleteList(id)
+            
+
+           // MOVE ALL THE DB's in model not to write in view
 
 
-            request.onsuccess = function(event) {
+      //       var t = db.transaction(["EVENTDATA2"], "readwrite");
+      //       var request = t.objectStore("EVENTDATA2").delete(Number(id));
 
-             
 
-            };
+      //       request.onsuccess = function(event) {
+
+      // //new addEventView().render();
+
+
+      //       };
 
         }
 
