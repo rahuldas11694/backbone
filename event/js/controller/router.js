@@ -1,7 +1,9 @@
 var Router = Backbone.Router.extend({
     initialize: function(e) {
         console.log("router initialized addEventview also initialized");
-$("#addPerson").show();
+         //router.navigate('events', { trigger: true });
+
+       // this.edits(e);
     },
 
     routes: {
@@ -10,21 +12,21 @@ $("#addPerson").show();
         "events": "eventsList", // this is for the event list on our index.html
         "edit/:id": "edits"
     },
-    addEvent: function(){
+    addEvent: function() {
         var form = new formView();
         // console.log("addEvent",new formView().render().$el)
         $(".container").html("");
-        $(".container").html(form.render().$el); 
+        $(".container").html(form.render().$el);
 
     },
 
     eventsList: function() {
 
         $(".container").html(new addEventView().render(event).$el);
-
         console.log("shows evets list")
 
-    } ,
+
+    },
 
     edits: function(id) {
         var event = new Event()
@@ -34,15 +36,8 @@ $("#addPerson").show();
             var form = new formView({ model: event });
 
             $(".container").html(form.render().$el);
-
-
-
         })
 
     }
 
 });
-
-//$(document).submit(function(e) { // this statement stops from page refreshing or yu can use return false
-  //  e.preventDefault();
-//});

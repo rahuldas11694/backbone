@@ -31,6 +31,9 @@ request.onsuccess = function(event) {
     //console.log("db here", db)
 
  router = new Router();
+console.log("hiiii")
+
+new formView().render(event);
     Backbone.history.start(); // to check what is after #
 
 };

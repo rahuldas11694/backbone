@@ -8,20 +8,11 @@ var Event = Backbone.Model.extend({
         location: '',
         eventDate: '',
         description: '',
-        idAttribute: "id"
+
 
     },
-
-
     save: function(json) {
-
-        if(this.model)
-        {
-            this.model.on("change",new formView().update(json),this);
-            console.log(this.model)
-            return
-        }
-
+        //here
 
         console.log("save fun called and createObjectStore here")
         console.log(db)
@@ -29,9 +20,10 @@ var Event = Backbone.Model.extend({
             .objectStore("EVENTDATA2").add(json)
         console.log("trans", trans)
 
-        request.onsuccess = function(event) {
 
-            alert("data has been added to your database.");
+        request.onsuccess = function(event) {
+         alert("Unable to add data\r\ndata aready exists in your database! ");
+
         };
 
         request.onerror = function(event) {
@@ -44,43 +36,70 @@ var Event = Backbone.Model.extend({
     edit: function(id, callback) {
         var that = this
             //console.log(event)
-        var trans = db.transaction(["EVENTDATA2"], "readwrite")
+        var transaction = db.transaction(["EVENTDATA2"], "readwrite")
             .objectStore("EVENTDATA2").get(Number(id));
 
-        //console.log(trans);
+        transaction.onsuccess = function(e) {
 
-        trans.onsuccess = function(e) {
-            console.log(e.target.result.name)
+            console.log(e.target.result)
+            
             var data = e.target.result;
+            
             console.log(data);
+            
             //that.set(data)
-            var setData = that.set({ eventName: data.name, eventDate: data.eventDate, location: data.location, email: data.email, description: data.description });
+            
+            var setData = that.set({ eventName: data.eventName, eventDate: data.eventDate, location: data.location, email: data.email, description: data.description });
+            
+             console.log(setData)
+
+
+        
+            var transaction = db.transaction(["EVENTDATA2"], "readwrite");
+            var objectStore = transaction.objectStore("EVENTDATA2");
+
+            var cursor = objectStore.openCursor();
+
+            cursor.onsuccess = function(e) {
+                 console.log(e)
+                var res = e.target.result;
+
+                console.log("#%#%#%#%#%#%#%#%#%#%#%#%#% CURSOR", res.value.id,"jhsbdS",setData)
+
+                res.update(setData);
+                   }
+
             callback(data);
-            console.log("AFTER CALL BACK", setData)
-        }
+        };
+
     }
 });
+
+        
+
+
+
 
 /***************************formView****************************************/
 var formView = Backbone.View.extend({ // add/edit form view
 
     model: new Event(),
-    initialize: function(data) {
+    initialize: function(e) {
         console.log("form view")
-        
 
+        this.listenTo(this.model, 'change', this.render);
     },
     events: {
         'click .add-event': 'add',
+
     },
 
-    add: function() {
+    add: function(e) {
 
-        
+
 
         router.navigate('events', { trigger: true });
-        //console.log("getting clicked")
-        //console.log(this.$el.find('#place').val())
+
         var eventName = this.$el.find('#name').val();
         var email = this.$el.find('#email').val();
         var location = this.$el.find('#place').val();
@@ -89,7 +108,7 @@ var formView = Backbone.View.extend({ // add/edit form view
 
         console.log("calling to model save")
         var json = {
-            name: eventName,
+            eventName: eventName,
             email: email,
             location: location,
             eventDate: eventDate,
@@ -97,30 +116,23 @@ var formView = Backbone.View.extend({ // add/edit form view
         }
 
         console.log("JSON", json)
-         
-
-        this.model.save(json); // calling the save fun to stor data in db 
-
-
-
-
+//this.update(json);
+        this.model.save(json); // calling the save fun to store data in db 
     },
 
-    update: function(json) {
-        var trans = db.transaction(["EVENTDATA2"], "readwrite")
-            .objectStore("EVENTDATA2").put(json);
-},
+    // update: function(json) {
+    //      console.log("UPDATE EXECUTING")
+    //     // var trans = db.transaction(["EVENTDATA2"], "readwrite")
+    //     //     .objectStore("EVENTDATA2").put(json)
+    },
     // rendering the list of events in db
     render: function(e) {
-
-
         var source = $("#form-template").html();
         // console.log(source)
         var template = Handlebars.compile(source);
         // console.log(template())
         // $("#addPerson").hide();
         this.$el.html(template(this.model.toJSON()));
-
 
         // this.$el.html(template());
         return this;
@@ -156,7 +168,7 @@ var addEventView = Backbone.View.extend({ // main eventslist view
         this.$el.html(template())
             //console.log(template)
             /******************#########################***************************/
-        var transaction = db.transaction(["EVENTDATA2"], "readonly");
+        var transaction = db.transaction(["EVENTDATA2"], "readwrite");
         var objectStore = transaction.objectStore("EVENTDATA2");
 
         var cursor = objectStore.openCursor();
@@ -165,12 +177,12 @@ var addEventView = Backbone.View.extend({ // main eventslist view
 
             var res = e.target.result;
 
-            //console.log("#%#%#%#%#%#%#%#%#%#%#%#%#%", res)
+            console.log("#%#%#%#%#%#%#%#%#%#%#%#%#% CURSOR", res)
 
 
             if (res != null) {
-                var context = { eventName: res.value.name, eventDate: res.value.eventDate, description: res.value.description, id: res.key };
-
+                var context = { eventName: res.value.eventName, eventDate: res.value.eventDate, email: res.value.email, description: res.value.description, id: res.key };
+                
                 var ev = new EventsView({
 
                     model: new Event(context)
@@ -181,7 +193,10 @@ var addEventView = Backbone.View.extend({ // main eventslist view
 
                 res.continue();
             }
+                
+
         }
+
         return this
     }
 
@@ -286,3 +301,56 @@ var Router = Backbone.Router.extend({
 $(document).submit(function(e) { // this statement stops from page refreshing or yu can use return false
     e.preventDefault();
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  var transaction = db.transaction(['rushAlbumList'], 'readwrite');
+  var objectStore = transaction.objectStore('rushAlbumList');
+
+  objectStore.openCursor().onsuccess = function(event) {
+    var cursor = event.target.result;
+    if(cursor) {
+      if(cursor.value.albumTitle === 'A farewell to kings') {
+        var updateData = cursor.value;
+          
+        updateData.year = 2050;
+        var request = cursor.update(updateData);
+        request.onsuccess = function() {
+          console.log('A better album year?');
+        };
+      };
+
+
+
+
+
+
+
+
+
