@@ -98,19 +98,6 @@ var Event = Backbone.Model.extend({
       // function called from
     displayUpdate: function(id, data) {
 
-if(window.location.hash == "#add")
-{
-console.log("hash change add")    
-}
-else if(window.location.hash == "#edit/"+id){
-
-
-
-}
-else
-{window.location.hash = "#/events";
-
-}
 
 
         console.log("QQQQQQQQ", id, data)

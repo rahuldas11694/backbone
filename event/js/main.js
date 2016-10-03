@@ -59,10 +59,10 @@ request.onsuccess = function(event) {
 
     Backbone.history.start(); // to check what is after #
 
-router.route("*notFound", function(){
-    console.log("404 error");
-    $("#c").html("PAGE NOT FOUND: 404 ERROR....")
-});
+// router.route("*notFound", function(){
+//     console.log("404 error");
+//     $("#c").html("PAGE NOT FOUND: 404 ERROR....")
+// });
 
 };
 

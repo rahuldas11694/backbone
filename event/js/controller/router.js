@@ -16,10 +16,17 @@ var Router = Backbone.Router.extend({
 
     },
     notFound: function() {
-        this.navigate("events", { trigger: true })
+        //this.navigate("events", { trigger: true })
+        if(window.location.hash =="")
+        {
+this.navigate("events", { trigger: true })
+        }else{
+        console.log("404errrr")
+        $("#c").html("Page Not Found: 404 Error....");
+}
     },
     addEvent: function() {
-
+        
 
         var form = new formView();
         console.log("DOLLAR DOLLAR", this.el)

@@ -13,10 +13,8 @@ var formView = Backbone.View.extend({ // add/edit form view
     },
 
     add: function(event) {
-        event.preventDefault();
-      
-
-        router.navigate('events', { trigger: true });
+        
+         router.navigate('events', { trigger: true });
 
         this.model.save(this.getData()); // calling the save fun to stor data in db 
         //return false;    // refreshes the ADD EVENT page if not written

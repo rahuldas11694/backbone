@@ -24,7 +24,7 @@ var addEventView = Backbone.View.extend({ // main eventslist view
         var template = Handlebars.compile(source);
         this.$el.html(template())
 
-        new Event().displayList();
+            new Event().displayList();
 
         return this
     }
