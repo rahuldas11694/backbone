@@ -3,7 +3,7 @@ var formView = Backbone.View.extend({ // add/edit form view
     model: new Event(),
     initialize: function(e) {
         console.log("form view")
-        //router.navigate('events', { trigger: true });
+
 
 
       },
@@ -12,7 +12,9 @@ var formView = Backbone.View.extend({ // add/edit form view
         'click .edit-event': 'update',
     },
 
-    add: function() {
+    add: function(event) {
+        event.preventDefault();
+      
 
         router.navigate('events', { trigger: true });
 

@@ -24,7 +24,9 @@ var EventsView = Backbone.View.extend( // event view
         },
 
         update: function(event) {
+            event.preventDefault();
             var id = Number(event.target.id);
+
             router.navigate("edit/" + id, { trigger: true });
         },
 
@@ -32,7 +34,7 @@ var EventsView = Backbone.View.extend( // event view
             var id = event.target.id;
             console.log("DELETE++++", event.target.id)
             new Event().deleteList(id)
-            return true;
+            //return true
         }
 
     });

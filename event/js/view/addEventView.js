@@ -5,7 +5,7 @@ var addEventView = Backbone.View.extend({ // main eventslist view
 
     initialize: function() {
         console.log("addEventview getting initialized")
-
+      
 },
 
     events: {

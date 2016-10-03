@@ -41,6 +41,7 @@ var Event = Backbone.Model.extend({
 
 
     edit: function(id, callback) {
+      
 
         var that = this
         console.log(event)
@@ -96,6 +97,22 @@ var Event = Backbone.Model.extend({
     },
       // function called from
     displayUpdate: function(id, data) {
+
+if(window.location.hash == "#add")
+{
+console.log("hash change add")    
+}
+else if(window.location.hash == "#edit/"+id){
+
+
+
+}
+else
+{window.location.hash = "#/events";
+
+}
+
+
         console.log("QQQQQQQQ", id, data)
         var that = this;
         /******** ************ ********** *********** ********* ******** *********/
@@ -127,6 +144,7 @@ var Event = Backbone.Model.extend({
                 }
                 cursor.continue();
             } else { console.log("not updated") }
+
         }
 
     },
@@ -139,7 +157,8 @@ var Event = Backbone.Model.extend({
 
 
         request.onsuccess = function(event) {
-        window.location.reload();
+        //window.location.reload();      //for refreshing the page after deleting the data 
+        Backbone.history.loadUrl(Backbone.history.fragment);
 
         }
     }

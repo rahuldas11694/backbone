@@ -25,16 +25,44 @@ request.onerror = function(event) {
 
 request.onsuccess = function(event) {
     db = request.result;
-
+    
     //console.log("success db: " + db);
     //console.log("event.target.result", event.target.result);
     //console.log("db here", db)
 
- router = new Router();
-console.log("hiiii")
 
-new formView().render(event);
+
+// if(window.location.hash != "")
+// {console.log(window.location.hash)
+//    window.location.hash = "#/events"; 
+// }
+// else if(window.location.hash == "#edit"){
+// //window.location.hash = "#/events";
+
+
+// }
+// else
+// {window.location.hash = "#/events";
+
+//  //Backbone.history.loadUrl(Backbone.history.fragment);
+// }
+
+//window.location.hash = "#/events"; 
+
+
+
+
+
+
+ router = new Router();
+
+
     Backbone.history.start(); // to check what is after #
+
+router.route("*notFound", function(){
+    console.log("404 error");
+    $("#c").html("PAGE NOT FOUND: 404 ERROR....")
+});
 
 };
 
@@ -45,8 +73,6 @@ request.onupgradeneeded = function(event) {
     console.log("objectStore created", objectStore)
     console.log("objectStore.IDBObjectStore.keyPath", objectStore.IDBObjectStore)
 }
-
-
 
 
 
